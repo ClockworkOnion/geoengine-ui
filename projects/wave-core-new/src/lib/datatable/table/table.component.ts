@@ -130,12 +130,17 @@ export class DataTableComponent implements OnInit, AfterViewInit, OnDestroy, OnC
 
     
     onFilterSelectionChange(value: string) {
-        console.log("Selection changed!" + value);
+        let checked: string[] = value.toString().split(',');
+        checked.forEach(x => console.log(x))
         this.removeDisplayedColumn(value);
     }
 
     removeDisplayedColumn(columnName: string) {
         this.displayedColumns = this.displayedColumns.filter(element => element != columnName);
+    }
+
+    addDisplayedColumn(columnName: string) {
+        this.displayedColumns.concat(columnName);
     }
 
     processRasterLayer(_layer: RasterLayer, _metadata: RasterLayerMetadata, _data: any): void {
