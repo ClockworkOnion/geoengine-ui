@@ -50,7 +50,7 @@
         <!-- <mat-option>coordinates</mat-option>
         <mat-option>start</mat-option>
         <mat-option>end</mat-option> -->
-        <mat-option *ngFor="let columnName of featureColumns" [value]="columnName">{{columnName}}</mat-option> <!-- Must be featureColumns or else checkboxes will disappear! -->
+        <mat-option *ngFor="let columnName of checkboxLabels" [value]="columnName">{{columnName}}</mat-option> <!-- Must be featureColumns or else checkboxes will disappear! -->
     </mat-select>
 </mat-form-field>
 <mat-paginator id="paginate" [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>

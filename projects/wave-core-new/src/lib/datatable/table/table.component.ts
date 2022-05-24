@@ -43,9 +43,10 @@ export class DataTableComponent implements OnInit, AfterViewInit, OnDestroy, OnC
     // selectedFeature$ = new BehaviorSubject<FeatureSelection>({feature: undefined});
 
     dataSource = new FeatureDataSource();
-    displayedColumns: Array<string> = [];
     featureColumns: Array<string> = [];
-
+    displayedColumns: Array<string> = [];
+    checkboxLabels: Array<string> = [];
+    
     protected layerDataSubscription?: Subscription = undefined;
     protected selectedFeatureSubscription?: Subscription = undefined;
 
@@ -125,6 +126,7 @@ export class DataTableComponent implements OnInit, AfterViewInit, OnDestroy, OnC
         this.featureColumns = metadata.columns.keySeq().toArray();
         this.displayedColumns = ['_____select', 'coordinates', 'start', 'end'].concat(this.featureColumns);
         this.dataSource.data = data.data;
+        this.checkboxLabels = this.displayedColumns.filter(element => element != '_____select');
         setTimeout(() => this.navigatePage(this.projectService.getSelectedFeature()));
     }
 
@@ -137,6 +139,7 @@ export class DataTableComponent implements OnInit, AfterViewInit, OnDestroy, OnC
 
     removeDisplayedColumn(columnName: string) {
         this.displayedColumns = this.displayedColumns.filter(element => element != columnName);
+        console.log(this.displayedColumns);
     }
 
     addDisplayedColumn(columnName: string) {
