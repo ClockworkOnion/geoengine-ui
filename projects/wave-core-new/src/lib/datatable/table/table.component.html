@@ -45,12 +45,8 @@
     </table>
 <mat-form-field id="columnFilter">
     <mat-label>Filter columns</mat-label>
-    <!-- <mat-select multiple [(ngModel)]='displayedColumns' (selectionChange)="onFilterSelectionChange($event.value)"> -->
-    <mat-select multiple [(ngModel)]='displayedColumns'> <!-- Maybe don't bind to ngModel at all -- Coordinates and time will disappear from table upon any changes... -->
-        <!-- <mat-option>coordinates</mat-option>
-        <mat-option>start</mat-option>
-        <mat-option>end</mat-option> -->
-        <mat-option *ngFor="let columnName of checkboxLabels" [value]="columnName">{{columnName}}</mat-option> <!-- Must be featureColumns or else checkboxes will disappear! -->
+    <mat-select multiple [(ngModel)]='displayedColumns'>
+        <mat-option *ngFor="let columnName of checkboxLabels" [value]="columnName">{{columnName}}</mat-option>
     </mat-select>
 </mat-form-field>
 <mat-paginator id="paginate" [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
