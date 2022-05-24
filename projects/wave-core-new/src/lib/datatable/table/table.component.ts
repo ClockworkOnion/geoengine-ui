@@ -128,6 +128,16 @@ export class DataTableComponent implements OnInit, AfterViewInit, OnDestroy, OnC
         setTimeout(() => this.navigatePage(this.projectService.getSelectedFeature()));
     }
 
+    
+    onFilterSelectionChange(value: string) {
+        console.log("Selection changed!" + value);
+        this.removeDisplayedColumn(value);
+    }
+
+    removeDisplayedColumn(columnName: string) {
+        this.displayedColumns = this.displayedColumns.filter(element => element != columnName);
+    }
+
     processRasterLayer(_layer: RasterLayer, _metadata: RasterLayerMetadata, _data: any): void {
         // TODO: implement
 

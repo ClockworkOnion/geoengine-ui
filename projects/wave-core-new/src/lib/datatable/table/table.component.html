@@ -43,6 +43,14 @@
             <td class="mat-cell no-data-row">No data to show</td>
         </tr>
     </table>
+<mat-form-field id="columnFilter">
+    <mat-label>Filter columns</mat-label>
+    <mat-select multiple (selectionChange)="onFilterSelectionChange($event.value)">
+        <mat-option>Coordinates</mat-option>
+        <mat-option>Start</mat-option>
+        <mat-option>End</mat-option>
+        <mat-option *ngFor="let columnName of featureColumns" [value]="columnName">{{columnName}}</mat-option>
+    </mat-select>
+</mat-form-field>
 </div>
-
 <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
