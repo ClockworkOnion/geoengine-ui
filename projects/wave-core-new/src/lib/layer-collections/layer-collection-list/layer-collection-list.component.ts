@@ -44,6 +44,7 @@ import {
 } from '../../layers/symbology/symbology.model';
 import {colorToDict} from '../../colors/color';
 import {RandomColorService} from '../../util/services/random-color.service';
+import {LayerCollectionBreadcrumbsService} from '../layer-collection-breadcrumbs/layer-collection-breadcrumbs.service';
 
 export interface LayerCollectionListConfig {
     id?: ProviderLayerCollectionIdDict;
@@ -65,6 +66,7 @@ export class LayerCollectionListComponent implements OnInit, AfterViewInit {
     readonly itemSizePx = 72;
 
     collection?: ProviderLayerCollectionIdDict = undefined;
+    breadCrumbHistory: Array<LayerCollectionItemDict> = [];
 
     selectListener!: (id: ProviderLayerCollectionIdDict) => void;
 
@@ -80,6 +82,7 @@ export class LayerCollectionListComponent implements OnInit, AfterViewInit {
         private readonly notificationService: NotificationService,
         private readonly randomColorService: RandomColorService,
         private readonly changeDetectorRef: ChangeDetectorRef,
+        private readonly breadCrumbService: LayerCollectionBreadcrumbsService,
     ) {
         this.collection = data.id;
         this.selectListener = data.selectListener;
@@ -87,6 +90,7 @@ export class LayerCollectionListComponent implements OnInit, AfterViewInit {
 
     ngOnInit(): void {
         this.source = new LayerCollectionItemDataSource(this.layerService, this.collection);
+        this.breadCrumbHistory = this.breadCrumbService.getHistory();
     }
 
     ngAfterViewInit(): void {
@@ -122,9 +126,15 @@ export class LayerCollectionListComponent implements OnInit, AfterViewInit {
         return createIconDataUrl(item.type);
     }
 
+    onBreadCrumbClick(id: LayerCollectionItemDict): void {
+        this.breadCrumbHistory = this.breadCrumbService.travelBackwards(id);
+        this.select(id);
+    }
+
     select(item: LayerCollectionItemDict): void {
         if (item.type === 'collection') {
             const collection = item as LayerCollectionDict;
+            this.breadCrumbService.addToHistory(item);
             this.selectListener(collection.id);
         } else if (item.type === 'layer') {
             const layer = item as LayerCollectionLayerDict;
