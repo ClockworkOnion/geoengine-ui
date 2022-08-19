@@ -1,4 +1,6 @@
-<span *ngFor="let item of breadCrumbHistory" (click)="onBreadCrumbClick(item)" class="breadcrumb"> -> {{ item.name }} </span>
+<span *ngFor="let item of breadCrumbHistory">
+    > <span (click)="onBreadCrumbClick(item)" class="breadcrumb">{{ item.name }}</span>
+</span>
 <cdk-virtual-scroll-viewport [itemSize]="itemSizePx" (scrolledIndexChange)="onScrolledIndexChange($event)">
     <mat-nav-list>
         <div *cdkVirtualFor="let item of source; trackBy: trackById">
